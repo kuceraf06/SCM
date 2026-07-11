@@ -1,0 +1,409 @@
+/* =====================================================================
+   SCM – stránka KONTAKT (design SAFE, zelená #93C11F)
+   ===================================================================== */
+
+.contact-body {
+    background-color: #F8F4F4;
+    width: 100%;
+}
+
+.contact-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;   /* horní řádek (formulář+info) a pod ním fakturace */
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+/* Horní řádek: formulář + kontaktní info vedle sebe, zalomí se pod sebe */
+.contact-top {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;      /* kontaktní box vycentrovaný vedle formuláře */
+    gap: 100px;
+}
+
+.contact-page textarea {
+    font-family: "Inter", sans-serif;
+}
+
+/* Box s mapou (vlevo) a formulářem (vpravo) */
+.contact-box {
+    flex: 3 1 400px;         /* formulář roste (3x rychleji než info) */
+    min-width: 0;            /* smí se zmenšit (grid uvnitř to jinak blokuje) */
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 1rem 1rem 30px 10px rgba(0, 0, 0, .4);
+}
+
+.contact-map iframe {
+    padding: 15px 0px;
+    padding-left: 40px;
+    width: 100%;
+    height: 500px;
+}
+
+.contact-panel {
+    padding: 0px 40px;
+}
+
+.contact-panel h1 {
+    position: relative;
+    padding: 0 0 10px;
+    margin-bottom: 20px;
+}
+
+/* Zelené podtržení nadpisu formuláře */
+.contact-panel h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 4px;
+    width: 180px;
+    background-color: #93C11F;
+}
+
+/* Česká verze má delší nadpis -> širší podtržení */
+.contact-panel-cs h1::after {
+    width: 260px;
+}
+
+.field {
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0);
+    outline: none;
+    background-color: rgba(230, 230, 230);
+    padding: .5rem 1rem;
+    margin-bottom: 22px;
+    transition: 1s;
+    border-radius: 5px;
+}
+
+.field:hover {
+    background-color: rgba(180, 219, 95, 0.9);
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    transition: 1s;
+}
+
+/* Automatické vyplnění prohlížečem nesmí přebarvit pole */
+.field:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgba(230, 230, 230) inset !important;
+    box-shadow: 0 0 0 1000px rgba(230, 230, 230) inset !important;
+    -webkit-text-fill-color: black !important;
+    border: 2px solid rgba(0, 0, 0, 0) !important;
+    border-radius: 5px !important;
+    transition: 1s !important;
+}
+
+.contact-panel textarea {
+    min-height: 150px;
+}
+
+.btn {
+    width: 100%;
+    padding: .5rem 1rem;
+    background-color: transparent;
+    font-size: 1.1rem;
+    border: 2px solid #93C11F;
+    color: black;
+    border-radius: 15px;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.btn:hover {
+    background-color: #93C11F;
+    border: 2px solid transparent;
+}
+
+.field:focus {
+    border: 2px solid rgba(0, 0, 0, .2);
+    background-color: rgba(180, 219, 95, 0.9);
+    transition: 1s;
+}
+
+/* Box s adresou / e-mailem / telefonem */
+.contact-methods {
+    flex: 1 1 260px;         /* úzký box vedle formuláře, roste míň */
+    max-width: 340px;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;  /* položky (adresa/email/telefon) pod sebou */
+    justify-content: center;
+    gap: 80px;
+    padding: 80px 40px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 1rem 1rem 30px 10px rgba(0, 0, 0, .4);
+}
+
+.contact-method {
+    position: relative;
+    width: 100%;
+}
+
+.contact-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: #93C11F;
+    width: 40px;
+    text-align: center;
+}
+
+.contact-text {
+    width: 100%;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.contact-label {
+    font-size: 19px;
+    margin-bottom: 4px;
+}
+
+.contact-value {
+    color: #93C11F;
+    font-size: 15px;
+    word-break: break-word;
+}
+
+.contact-value a {
+    color: #93C11F;
+    transition: color .2s ease;
+}
+
+.contact-value a:hover {
+    color: #93C11F;
+}
+
+/* Odsazení textů se liší podle šířky ikony před nimi */
+.contact-text-email {
+    padding-left: 0;
+}
+
+.contact-text-phone {
+    padding-left: 0;
+}
+
+/* Hlášky formuláře (úspěch / chyba) – společný základ + barvy */
+.alert {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+.alert-success {
+    background-color: rgba(20, 50, 20, 1);
+    color: green;
+}
+
+.alert-failed {
+    background-color: rgba(255, 0, 0, 0.3);
+    color: red;
+}
+
+.alert-email {
+    background-color: rgba(255, 0, 0, 0.3);
+    color: red;
+}
+
+.alert-phone {
+    background-color: rgba(255, 0, 0, 0.3);
+    color: red;
+}
+
+/* ---------------------------------------------------------------------
+   Responzivní úpravy
+   --------------------------------------------------------------------- */
+
+@media (max-width: 943px) {
+    .contact-value {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1550px) {
+    .contact-page {
+        gap: 40px;
+    }
+
+    .contact-top {
+        gap: 40px;
+    }
+
+    .contact-value {
+        font-size: 15px;
+    }
+
+    .contact-box {
+        flex: 1 1 100%;
+        max-width: 930px;
+    }
+
+    .contact-methods {
+        flex: 1 1 100%;
+        flex-direction: row;
+        max-width: 930px;
+        gap: 40px;
+        padding: 45px 40px;
+    }
+
+    .billing-info {
+        margin-top: 0px !important;
+    }
+}
+
+@media (max-width: 872px) {
+    .contact-body {
+        margin-top: 2vh;
+    }
+
+    .contact-box {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-map iframe {
+        padding: 0;
+    }
+
+    /* zalomený kontaktní box smí být širší (už není vedle formuláře) */
+    .contact-methods {
+        max-width: 100%;
+    }
+
+    .contact-panel {
+        padding: 30px 40px;
+    }
+}
+
+@media (max-width: 826px) {
+    .contact-value {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 386px) {
+    .contact-label {
+        font-size: 17px;
+    }
+
+    .contact-icon {
+        font-size: 25px;
+    }
+
+    .contact-value {
+        font-size: 10px;
+    }
+
+    .contact-text-email {
+        padding-left: 0;
+    }
+
+    .contact-text-phone {
+        padding-left: 0;
+    }
+}
+
+/* =====================================================================
+   Fakturační údaje (karta pod kontaktními metodami)
+   ===================================================================== */
+
+.billing-info {
+    width: 100%;
+    max-width: 930px;
+    margin: 0 auto;          /* vždy dole, vycentrováno na střed */
+    margin-top: 60px;
+    padding: 40px 50px;
+    background-color: #fff;
+    box-shadow: 1rem 1rem 30px 10px rgba(0, 0, 0, .4);
+}
+
+.billing-title {
+    font-family: "Titan One", sans-serif;
+    font-size: 24px;
+    color: #000;
+    text-align: center;
+    position: relative;
+    padding-bottom: 14px;
+    margin-bottom: 30px;
+}
+
+/* zelené podtržení pod nadpisem */
+.billing-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background-color: #93C11F;
+}
+
+/* údaje ve dvou sloupcích */
+.billing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 40px;
+}
+
+.billing-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 16px;
+    border-left: 3px solid #93C11F;
+}
+
+.billing-label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #999;
+}
+
+.billing-data {
+    font-family: "Inter", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #000;
+}
+
+@media (max-width: 872px) {
+    .billing-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .billing-info {
+        padding: 30px 25px;
+    }
+
+    /* na mobilu údaje pod sebou */
+    .billing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-methods {
+        max-width: 100%;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,110 @@
+/* =====================================================================
+   SCM – stránky ROZPISŮ (léto + zima, sdílejí stejné styly)
+   Karty tréninků jsou VŽDY stejně široké i vysoké. Řešeno CSS gridem:
+   - grid se 2 sloupci pevné šířky (na desktopu) => stejná šířka
+   - grid-auto-rows: 1fr => všechny řádky (a tím i karty) stejně vysoké
+   - lichá poslední karta se roztáhne přes oba sloupce a vycentruje
+   - obrázek má pevnou výšku (object-fit: cover), text vyplní zbytek karty
+   ===================================================================== */
+
+.schedule-body {
+    background-color: #F8F4F4;
+}
+
+.schedule-page {
+    margin-bottom: 100px;
+}
+
+/* Mřížka tréninků: 2 sloupce, stejně vysoké řádky, vycentrováno */
+.practice-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 480px));
+    grid-auto-rows: 1fr;          /* všechny řádky stejně vysoké */
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Lichá poslední karta (samotná v řádku) přes oba sloupce, vycentrovaná,
+   ale se stejnou šířkou jako ostatní. Platí i pro léto (1 karta). */
+.practice-block:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    /* šířka = přesně jeden sloupec (polovina mřížky minus půlka mezery),
+       max 480px jako ostatní sloupce => vždy stejná šířka jako ostatní karty */
+    width: calc((100% - 40px) / 2);
+    max-width: 480px;
+}
+
+/* Jedna karta tréninku: sloupec (foto nahoře, text dole), vyplní celou
+   výšku buňky gridu => všechny karty stejně vysoké */
+.practice-block {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 1rem 1rem 30px 10px rgba(0, 0, 0, .4);
+}
+
+.practice-photo h2 {
+    position: relative;
+    padding: 20px 0px;
+}
+
+/* obrázek pevné výšky => karty mají stejně vysokou foto část */
+.practice-photo img {
+    width: 90%;
+    height: 220px;
+    object-fit: cover;
+    margin: auto;
+    display: block;
+    transition: .5s ease;
+}
+
+.practice-photo:hover img {
+    transform: scale(1.05);
+}
+
+/* text vyplní zbytek karty, aby spodky karet lícovaly */
+.practice-text {
+    flex: 1;
+    padding: 25px 40px;
+}
+
+.practice-text a {
+    color: #93C11F;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.practice-text p {
+    margin-top: 10px;
+}
+
+/* ---------------------------------------------------------------------
+   Responzivní úpravy
+   --------------------------------------------------------------------- */
+
+/* užší displeje: jeden sloupec, karty pod sebe (stále stejně široké) */
+@media (max-width: 900px) {
+    .practice-list {
+        grid-template-columns: minmax(0, 480px);
+    }
+
+    /* v jednom sloupci už lichou kartu neroztahujeme */
+    .practice-block:last-child:nth-child(odd) {
+        grid-column: auto;
+        width: auto;
+    }
+}
+
+@media (max-width: 544px) {
+    .practice-list {
+        gap: 30px;
+    }
+
+    .practice-photo img {
+        height: 190px;
+    }
+}

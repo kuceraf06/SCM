@@ -1,0 +1,23 @@
+Ktery obrazek patri kam (a kde se pouziva):
+
+common/     SCM.png            - logo v hlavicce (vsechny stranky) + potvrzovaci mail
+            Miners.png         - logo v paticce (vsechny stranky)
+            favicon-32x32.png  - ikona v zalozce prohlizece (vsechny stranky)
+            team-mem-none.jpg  - zastupne foto (Treneri + Hraci)
+
+home/       team-1.jpg         - pozadi uvodni stranky (nacita se z css/style.css)
+
+about/      team-3.jpeg        - fotka na strance O nas
+
+staff/      team-mem-1.jpg     - Petr Baroch
+            team-mem-2.jpg     - Filip Kucera
+            team-mem-4.jpg     - Ondrej Vostatek
+            team-mem-5.jpg     - David Jaklin
+            team-mem-7.jpg     - Michaela Curillova
+            team-mem-8.jpg     - Martin Posselt
+
+partners/   partners-1.png az partners-10.png     - loga partneru
+            partners-1-1.png az partners-10-1.png - hover varianty log
+
+schedule/   hala-1.jpg, hala-2.jpg               - Zimni rozpis
+            miners-field-1.jpg, miners-field-2.jpg - Letni rozpis

@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Statické soubory (css, js, obrázky) se servírují přímo
+RewriteRule ^public/ - [L]
+
+# Zákaz přímého přístupu do app/ (pohledy jdou jen přes index.php)
+RewriteRule ^app/ - [F]
+
+# Vše ostatní jde přes front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]

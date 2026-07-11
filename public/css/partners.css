@@ -1,0 +1,143 @@
+/* =====================================================================
+   SCM – stránka PARTNEŘI (design SAFE)
+   ===================================================================== */
+
+.partners-body {
+    background-color: #F8F4F4;
+}
+
+/* Mobilní verze seznamu – na desktopu schovaná */
+.partners-mobile {
+    display: none;
+}
+
+.partners-page {
+    place-items: center;
+    display: grid;
+    height: auto;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.partners-page h1 {
+    font-size: 50px;
+    color: #000;
+    margin-bottom: 50px;
+    position: relative;
+    margin-top: 150px;
+}
+
+.partners-page h1::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    display: block;
+    margin: 0px auto;
+    background-color: #93C11F;
+}
+
+.partners-list {
+    width: 100%;
+    height: auto;
+}
+
+.partners-list h2 {
+    margin-top: 50px;
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.partners-list ul {
+    padding: 0;
+    margin: 0;
+}
+
+/* Dlaždice partnera: uvnitř jsou dvě loga nad sebou, dlaždice ukazuje
+   jen první; při najetí obě vyjedou nahoru a odhalí druhé (barevné) */
+.partners-list ul li {
+    list-style: none;
+    display: inline-block;
+    width: 250px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    margin: 25px 10px;
+    box-shadow: 10px 10px 10px -7px #555;
+    transition: .5s;
+}
+
+.partners-list ul li img {
+    width: 100%;
+    height: 100%;
+    transform: translateY(0);
+    transition: .5s;
+}
+
+.partners-list ul li:hover img {
+    transform: translateY(-100%);
+    transition: .5s;
+}
+
+/* Pomocné zalomení řádku – zobrazí se až na užších šířkách */
+.partners-break-narrow {
+    display: none;
+}
+
+/* ---------------------------------------------------------------------
+   Responzivní úpravy
+   --------------------------------------------------------------------- */
+
+@media (max-width: 833px) {
+    .partners-break-narrow {
+        display: block;
+    }
+
+    .partners-break-wide {
+        display: none;
+    }
+}
+
+/* mobilní seznam partnerů místo desktopového */
+@media (max-width: 768px) {
+    .partners-desktop {
+        display: none;
+    }
+
+    .partners-mobile {
+        display: inline-block;
+    }
+
+    .partners-list-mobile {
+        width: 100%;
+        height: auto;
+    }
+
+    .partners-list-mobile h2 {
+        margin-top: 50px;
+        font-size: 23px;
+        margin-bottom: 15px;
+    }
+
+    .partners-list-mobile ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .partners-list-mobile ul li {
+        list-style: none;
+        display: inline-block;
+        width: 250px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+        margin: 25px 10px;
+        box-shadow: 10px 10px 10px -7px #555;
+        transition: .5s;
+    }
+
+    .partners-list-mobile ul li img {
+        width: 100%;
+        height: 100%;
+    }
+}

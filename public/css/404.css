@@ -1,0 +1,31 @@
+/* =====================================================================
+   SCM – stránka 404 (nenalezeno)
+   Nadpis s podtržením dodává pageshared.css (.heading).
+   ===================================================================== */
+
+.error-body {
+    background-color: #F8F4F4;
+}
+
+.error-page {
+    margin-bottom: 100px;
+}
+
+/* Zelené tlačítko zpět na úvod – stejný vzhled jako tlačítka na webu */
+.back-home {
+    display: inline-block;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-size: 19px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 30px;
+    transition: .3s ease;
+    background-color: #93C11F;
+    border: 2px solid #93C11F;
+}
+
+.back-home:hover {
+    background-color: #7AA01A;
+}

@@ -1,0 +1,126 @@
+/* =====================================================================
+   SCM – sdílené styly podstránek (design SAFE, zelená #93C11F)
+   Nadpis s podtržením (o nás, rozpisy, kontakt, 404) a bílá karta
+   se stínem (trenéři, hráči).
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   JEDNOTNÁ ŠÍŘKA VŠECH PODSTRÁNEK
+   Desktop: 75 % (vycentrováno). Jakmile se obrazovka zmenší, obsah se
+   roztáhne skoro přes celou šířku jen s malým odsazením (jako minerskladno.cz).
+   Aplikuje se přes třídu .page-width na <main> každé stránky.
+   --------------------------------------------------------------------- */
+.page-width {
+    width: 75%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1200px) {
+    .page-width {
+        width: 92%;   /* menší displeje: skoro plná šířka, malé odsazení */
+    }
+}
+
+/* Nadpis s podtržením */
+.heading {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.heading h1 {
+    font-size: 50px;
+    color: #000;
+    margin-bottom: 25px;
+    position: relative;
+    margin-top: 100px;
+}
+
+.heading h1::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    display: block;
+    margin: 0px auto;
+    background-color: #93C11F;
+}
+
+.heading p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 35px;
+}
+
+/* Stránka trenérů/hráčů: nadpis nahoře (mimo box) + bílá karta s obsahem */
+.roster-page {
+    margin-bottom: 80px;
+}
+
+/* Velká bílá karta se stínem – obal pro trenéry i hráče.
+   Roztažená skoro přes celou šířku, aby obsah vyplnil i kraje. */
+.roster-card {
+    border-radius: 16px;
+    background-color: #fff;
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: auto;
+    padding: 50px;
+    padding-bottom: 100px;
+    box-shadow: 1rem 1rem 30px 10px rgba(0, 0, 0, .4);
+}
+
+/* Pomocné zalomení řádku karet – řídí media dotazy níže */
+.roster-break-narrow {
+    display: none;
+}
+
+/* ---------------------------------------------------------------------
+   Responzivní úpravy
+   --------------------------------------------------------------------- */
+
+@media (max-width: 1832px) {
+    .roster-card {
+        width: 81.5%;
+    }
+}
+
+@media (max-width: 1641px) {
+    .roster-card {
+        width: 95%;
+    }
+}
+
+@media (max-width: 1407px) {
+    .roster-break-narrow {
+        display: block;
+    }
+
+    .roster-break-wide {
+        display: none;
+    }
+}
+
+@media (max-width: 986px) {
+    .roster-break-narrow {
+        display: none;
+    }
+}
+
+@media (max-width: 815px) {
+    .heading {
+        padding: 0px 20px;
+    }
+
+    .heading p {
+        font-size: 17px;
+        margin-bottom: 0px;
+    }
+}

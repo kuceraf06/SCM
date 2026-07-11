@@ -1,0 +1,43 @@
+# =============================================================================
+#  .gitignore pro cely projekt SCM (web + administrace)
+# =============================================================================
+#  Do gitu patri KOD. Nepatri sem tajemstvi (hesla, secret) ani runtime data
+#  (databaze, nahrane soubory), ktera vznikaji a meni se az na serveru.
+# =============================================================================
+
+# --- Konfigurace -----------------------------------------------------------
+# POZN.: config/config.php (hash hesla + app_secret) je ZÁMĚRNĚ součástí gitu,
+# aby kolega po stažení nemusel nic nastavovat - stačí stáhnout a nahrát.
+# Hash hesla není čitelné heslo, ale ber na vědomí, že ho uvidí každý s
+# přístupem k repozitáři. Heslo lze kdykoliv změnit v administraci
+# (sekce Změna hesla). Pokud bys config chtěl z gitu vyřadit, odkomentuj:
+# /config/config.php
+
+# --- Databaze (runtime data) -----------------------------------------------
+# Bezici SQLite databaze patri na server, ne do gitu. Verzovani menici se
+# databaze byl hlavni problem stare administrace (deploy prepsal data).
+# Prazdnou slozku drzime pres .gitkeep, aby po clonu existovala.
+/storage/db/*
+!/storage/db/.gitkeep
+
+# --- Nahrane soubory (runtime data) ----------------------------------------
+# Fotky nahrane v administraci. Taky data, ne kod.
+/public/images/uploads/*
+!/public/images/uploads/.gitkeep
+
+# --- Systemove smeti a logy -------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+
+# --- Editory / IDE ----------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Zavislosti (kdyby se v budoucnu pridaly) ------------------------------
+/vendor/
+/node_modules/

@@ -1,0 +1,902 @@
+/* =====================================================================
+   SCM – hlavní styly (design převzatý ze SAFE webu, zelená #93C11F)
+   Obsah: fonty a základ -> tlačítko nahoru -> topheader -> hlavička
+   a navigace -> patička -> úvodní stránka -> responzivní úpravy layoutu.
+   Styly podstránek jsou v samostatných souborech (about.css, ...).
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   FONTY A ZÁKLAD
+   Nadpisy a navigace = "Titan One", běžný text = "Inter" (jako SAFE)
+   --------------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Titan One", sans-serif;
+}
+
+p, h3, h4, a, ul, li, strong, label, input::placeholder, input, select, option, i, button, textarea::placeholder {
+    font-family: "Inter", sans-serif;
+}
+
+h1, h2 {
+    font-weight: 400 !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Tělo je flex sloupec, aby patička držela u spodního okraje */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Hlavní obsah vždy vyplní volný prostor -> patička nikdy nevisí s mezerou
+   nad sebou (řeší prázdno u krátkých stránek jako trenéři/hráči). */
+main {
+    flex: 1 0 auto;
+}
+
+/* Pozadí úvodní stránky (foto týmu s tmavým přechodem) */
+.homepage-body {
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url('../images/home/team-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* ---------------------------------------------------------------------
+   TLAČÍTKO "NAHORU" – zelené pozadí, černá šipka
+   --------------------------------------------------------------------- */
+
+.to-top {
+    background-color: rgba(147, 193, 31, .8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    color: #000;
+    position: fixed;
+    bottom: 16px;
+    right: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .4s;
+    z-index: 2;
+}
+
+.to-top.active {
+    bottom: 32px;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.to-top:hover {
+    background-color: #93C11F;
+}
+
+/* ---------------------------------------------------------------------
+   TOPHEADER – úzká lišta úplně nahoře (název klubu + ikony)
+   --------------------------------------------------------------------- */
+
+.topheader {
+    font-family: "Titan One", sans-serif;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    align-items: center;
+    padding: 2px 10px 0px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.topheader div {
+    font-size: 1rem;
+}
+
+.header-icons a i:hover {
+    color: #93C11F;
+}
+
+.topheader .header-icons a:first-child img {
+    width: 47.2px;
+    height: 24px;
+}
+
+.topheader .header-icons a:nth-child(2) img {
+    width: 26.4px;
+    height: 24px;
+}
+
+.topheader .header-icons a:nth-child(3) img {
+    width: 24.8px;
+    height: 24px;
+}
+
+.topheader .header-icons a:nth-child(4) img,
+.topheader .header-icons a:nth-child(5) img {
+    width: 24px;
+    height: 24px;
+}
+
+.header-icons a img:hover {
+    background-color: #93C11F;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+/* ---------------------------------------------------------------------
+   HLAVIČKA A NAVIGACE (černý pruh pod topheaderem)
+   --------------------------------------------------------------------- */
+
+.header {
+    position: fixed;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    padding: 18px 5% 18px 160px; 
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    transition: .5s ease;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    backdrop-filter: blur(0px);
+    z-index: -1;
+}
+
+#logo {
+    position: absolute;
+    top: 0px;          /* vyčnívá nahoru do topheaderu */
+    left: 40px;
+    width: 120px;        /* vyčnívá i dolů pod pruh navigace */
+    z-index: 1000;
+    /* plynulé zmenšování/zvětšování (třídu .shrink dává JS při scrollu) */
+    transition: width .3s ease, top .3s ease, transform .3s ease;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.navbar a,
+.navbar p {
+    font-family: "Titan One", sans-serif;
+    font-size: 1.15rem;
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 8px;
+    margin-left: 3vw;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.navbar a:hover,
+.navbar p:hover {
+    color: #93C11F;
+}
+
+/* Přepínač jazyka na desktopu – zelený, zarovnaný doprava */
+.pc-translate {
+    margin-left: auto;
+    font-family: "Titan One", sans-serif;
+    font-size: 1.15rem;
+    color: #93C11F !important;
+    text-decoration: none;
+    padding: 6px 8px;
+    transition: .2s ease-in-out;
+}
+
+.pc-translate:hover {
+    color: #fff !important;
+}
+
+/* Mobilní přepínač jazyka – na desktopu schovaný */
+.mobile-translate {
+    display: none;
+}
+
+/* Celoobrazovkové mobilní menu – ukazuje se jen na mobilu (viz media níže) */
+.mobile-nav {
+    display: none;
+}
+
+/* Hamburger – zobrazí ho až mobilní breakpoint.
+   Selektor i.menu-icons je schválně: boxicons (.bx) se načítá po tomto
+   souboru a nastavuje display, vyšší specificita ho přebije. */
+i.menu-icons {
+    position: absolute;
+    right: 5%;
+    font-size: 2.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+/* Desktopové dropdowny (O nás / Soupiska / Rozpis) */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 3vw;
+}
+
+/* odsazení nese .dropdown, aby byl panel vycentrovaný přesně pod textem */
+.dropdown .dropdown-toggle {
+    margin-left: 0;
+}
+
+.dropdown-content {
+    left: 50%;
+    transform: translateX(-50%);   /* vycentrování pod nadpisem */
+    margin-top: 18px;
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    background-color: rgb(0, 0, 0, .8);
+    padding: 6px 8px;
+    z-index: 1;
+    animation-duration: 0.5s;
+    animation-name: slideIn;
+    transition: opacity 0.3s;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translate(-50%, -10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+.dropdown-content a {
+    color: white;
+    margin-left: 0px;
+    padding: 12px 18px;
+    text-decoration: none;
+    display: block;
+    text-shadow: none !important;
+    transition: .3s ease-in-out;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(147, 193, 31, 0.5);
+    color: white;
+}
+
+/* Otočení šipky u otevřeného dropdownu (třídu přidává JS) */
+.rotate-90 {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+/* ---------------------------------------------------------------------
+   PATIČKA (bílá, 4 sloupce, černý copyright pruh)
+   --------------------------------------------------------------------- */
+
+footer {
+    margin-top: auto;
+    font-family: "Inter", sans-serif !important;
+    background-color: white;
+}
+
+footer h4 {
+    font-family: "Inter", sans-serif !important;
+}
+
+.footer-content {
+    padding: 2% 0 0 0;
+    width: 100%;
+    z-index: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.footer-container {
+    max-width: 1440px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.row-footer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer-col:nth-child(2) {
+    width: 18% !important;
+}
+
+.footer-col {
+    width: 25%;
+    padding: 0 15px;
+    color: #000;
+}
+
+.footer-col h4 {
+    font-size: 18px;
+    text-transform: capitalize;
+    margin-bottom: 35px;
+    font-weight: 600;
+    position: relative;
+    color: #000;
+}
+
+/* Zelená linka pod nadpisy sloupců */
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    background-color: #93C11F;
+    height: 2px;
+    width: 43px;
+}
+
+.footer-col ul {
+    list-style: none;
+    flex-direction: column;
+    display: flex;
+    padding: 0;
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: #000;
+    font-weight: 400;
+    display: block;
+    width: 0;
+    transition: all .3s ease;
+}
+
+.footer-col ul li a:hover {
+    padding-left: 8px;
+}
+
+.footer-col img {
+    width: 140px;
+    margin-left: auto;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+/* Kulaté ikony sociálních sítí */
+.footer-col .social-links a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: black;
+    transition: all .5s ease;
+}
+
+.social-links {
+    width: 100%;
+}
+
+.footer-col .social-links a:not(:first-child) {
+    margin-left: 20px;
+}
+
+.footer-col .social-links a:hover {
+    color: white;
+    background-color: black;
+}
+
+.contact-footer a {
+    text-decoration: none;
+    color: #000;
+}
+
+.contact-footer p {
+    margin-bottom: 1rem;
+}
+
+/* Černý copyright pruh */
+.copyright {
+    text-align: center;
+    padding: 3px;
+    background-color: #000;
+}
+
+.copyright a {
+    color: #fff;
+    font-size: small;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------
+   ÚVODNÍ STRÁNKA (hero s nadpisem a tlačítky)
+   --------------------------------------------------------------------- */
+
+.hero {
+    width: 100%;
+    min-height: 30vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 40%, rgb(0, 0, 0) 70%, rgb(0, 0, 0) 100%);
+    margin-top: 70vh;
+    text-align: center;
+    color: #fff;
+    z-index: 0;
+}
+
+.hero h1 {
+    font-size: 40px;
+    font-weight: 400 !important;
+    margin-top: 50px;
+}
+
+.hero i {
+    margin: 20px auto;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+/* Tlačítka KONTAKT / O NÁS – zelená výplň se "nalije" zleva */
+.hero-buttons button {
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #93C11F;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-buttons span {
+    background-color: #93C11F;
+    height: 100%;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: .5s;
+}
+
+.hero-buttons button:hover span {
+    width: 100%;
+}
+
+.hero-buttons button:hover {
+    border: none;
+    z-index: 1;
+}
+
+/* =====================================================================
+   RESPONZIVNÍ ÚPRAVY LAYOUTU
+   ===================================================================== */
+
+/* ------ užší desktop: menší písmo navigace a nadpisů, menší logo ------ */
+
+@media (max-width: 1234px) {
+    .navbar a,
+    .navbar p,
+    .heading p {
+        font-size: .9rem !important;
+    }
+
+    .heading h1,
+    .partners-page h1 {
+        font-size: 36px !important;
+    }
+
+    #logo {
+        width: 100px;
+    }
+}
+
+@media (max-width: 1196px) {
+    .footer-col .social-links a:not(:first-child, :last-child, :nth-child(2)) {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+}
+
+/* ------ vypnutí hover efektů + patička 2×2 ------ */
+
+@media (max-width: 1098px) {
+    .footer-col ul li a:hover {
+        padding-left: 0px;
+    }
+
+    .footer-col .social-links a:hover {
+        color: black;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-buttons button:hover span {
+        width: 0;
+    }
+
+    .hero-buttons button:hover {
+        border: 2px solid #93C11F;
+    }
+
+    .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+
+    .footer-col img {
+        margin-left: -40px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .social-links {
+        width: 100%;
+    }
+
+    .footer-col .social-links a:not(:first-child) {
+        margin-left: 20px;
+        margin-top: 0px;
+    }
+
+    .hero {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 40%, rgb(0, 0, 0) 70%);
+    }
+}
+
+/* =====================================================================
+   HLAVNÍ MOBILNÍ ZLOM – hamburger menu
+   ===================================================================== */
+
+@media (max-width: 991px) {
+    .mobile-translate {
+        display: block;
+        margin-left: auto;
+    }
+
+    .mobile-translate a {
+        position: relative;
+        font-family: "Titan One", sans-serif;
+        font-size: .9rem;
+        color: #93C11F !important;
+        text-decoration: none;
+        margin-right: 4rem;
+    }
+
+    /* ikony v topheaderu na mobilu bez hover efektu */
+    .header-icons a i:hover {
+        color: #fff;
+    }
+
+    .header-icons a img:hover {
+        background-color: transparent;
+    }
+
+    /* desktopové dropdowny pryč, mobilní skupiny menu se ukážou */
+    .dropdown {
+        display: none;
+    }
+
+    .header {
+        padding: 28px 5% 28px 160px;
+    }
+
+    #logo {
+        top: 8px;
+        width: 110px;
+    }
+
+    /* Po odscrollování z vršku stránky (JS přidá .shrink) se logo
+       plynule zmenší dovnitř pruhu - žádný přesah. Zpět naroste
+       až úplně nahoře na stránce. */
+    .header.shrink #logo {
+        width: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #menu-icon {
+        font-size: 2.5rem;
+    }
+
+    .header::before {
+        background-color: black;
+    }
+
+    /* hamburger: přepínání ikon menu/křížek přes checkbox */
+    i.menu-icons {
+        display: inline-flex;
+    }
+
+    /* desktopová navigace je na mobilu schovaná - menu řeší .mobile-nav */
+    .navbar {
+        display: none;
+    }
+
+    /* ===== celoobrazovkové mobilní menu ===== */
+
+    .mobile-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;    /* černé jako desktopový navbar */
+        z-index: 1100;             /* nad topheaderem i logem */
+        overflow: hidden;          /* menu se nescrolluje - scrolluje stránka pod ním */
+    }
+
+    .mobile-nav.open {
+        display: block;
+    }
+
+    /* panely: hlavní menu + jednotlivá podmenu, vidět je vždy jen jeden */
+    .mobile-nav-panel {
+        display: none;
+        height: 100%;
+    }
+
+    .mobile-nav-panel.active {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* horní lišta menu: šipka zpět (jen v podmenu) vlevo, křížek vpravo */
+    .mobile-nav-bar {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        min-height: 70px;
+    }
+
+    .mobile-nav-back {
+        font-size: 2.8rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .mobile-nav-close {
+        font-size: 2.8rem;
+        color: #fff;
+        cursor: pointer;
+        margin-left: auto;
+    }
+
+    /* seznam položek: nahoře pod lištou, texty na středu */
+    .mobile-nav-list {
+        list-style: none;
+        margin: 50px 0 0 0;
+        padding: 0;
+    }
+
+    .mobile-nav-list li {
+        margin: 1.2rem 0;
+    }
+
+    .mobile-nav-item,
+    .mobile-nav-list a {
+        font-family: "Titan One", sans-serif;
+        display: block;
+        width: 100%;
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        padding: .6rem 60px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    /* malá šipka u kraje - jen u položek, které mají podstránky */
+    .mobile-nav-item i {
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        color: #fff;
+    }
+}
+
+/* ------ patička a topheader na menších displejích ------ */
+
+@media (max-width: 860px) {
+    .social-links {
+        width: 25%;
+        margin-top: -10px;
+    }
+
+    .footer-col .social-links a:not(:first-child) {
+        margin-left: 0px;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 815px) {
+    .footer-container {
+        padding: 0px;
+    }
+}
+
+@media (max-width: 796px) {
+    .social-links {
+        width: 100%;
+    }
+
+    .footer-col .social-links a:not(:first-child) {
+        margin-left: 20px;
+        margin-top: 0px;
+    }
+}
+
+/* ------ úvodka: hero výš na nižších displejích ------ */
+
+@media (max-width: 671px) {
+    .hero {
+        margin-top: 62vh;
+    }
+}
+
+@media (max-width: 619px) {
+    .topheader div {
+        font-size: .9rem;
+    }
+
+    .header {
+        padding: 23px 5% 23px 160px;
+    }
+
+    #logo {
+        top: 5px;
+        left: 15px;
+        width: 100px;
+    }
+
+    .header.shrink #logo {
+        width: 50px;
+    }
+}
+
+@media (max-width: 595px) {
+    .footer-content {
+        padding: 5% 0 0 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .topheader div {
+        font-size: .8rem;
+    }
+}
+
+@media (max-width: 530px) {
+    .topheader div {
+        font-size: 1rem;
+    }
+
+    .special {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .social-links {
+        width: 40%;
+    }
+
+    .footer-col .social-links a:not(:first-child) {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+
+    .topheader .header-icons a img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .topheader div {
+        font-size: .9rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .footer-col {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer-col:nth-child(2) {
+        width: 100% !important;
+    }
+
+    .social-links {
+        width: 100%;
+    }
+
+    .footer-col .social-links a:not(:first-child) {
+        margin-left: 20px;
+        margin-top: 0px;
+    }
+
+    .footer-col:last-child {
+        margin-top: 15px;
+    }
+
+    .footer-col:first-child {
+        text-align: center;
+    }
+
+    .footer-col img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 444px) {
+    .hero {
+        margin-top: 50vh;
+    }
+
+    .hero-buttons button {
+        margin: 10px !important;
+    }
+}
+
+@media (max-width: 386px) {
+    .hero {
+        margin-top: 52.7vh;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero i {
+        font-size: 17px;
+    }
+}
