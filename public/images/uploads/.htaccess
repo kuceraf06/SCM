@@ -1,0 +1,42 @@
+# =============================================================================
+#  Ve složce nahraných souborů se NIKDY nesmí spustit skript (obrana proti RCE).
+# =============================================================================
+#  POZOR na dvě věci, o které se to dřív rozbíjelo:
+#
+#  1) php_admin_flag NENÍ v .htaccess povolený NIKDY. Apache na něj shodí
+#     celou složku (HTTP 500) – i obyčejné obrázky.
+#  2) php_flag zná jen mod_php. Když na serveru běží PHP-FPM (Synology),
+#     je to neznámá direktiva a Apache zase spadne. Proto MUSÍ být schované
+#     v <IfModule>.
+#
+#  Hlavní ochrana je proto FilesMatch + RemoveHandler, které fungují vždycky.
+# =============================================================================
+
+# --- Hlavní ochrana: skriptové soubory prostě nevydáme -----------------------
+<FilesMatch "\.(?i:php|phtml|php3|php4|php5|php7|php8|phps|phar|cgi|pl|py|jsp|asp|aspx|sh|shtml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# --- Pojistka: odebrat obsluhu skriptů (funguje i bez mod_php) ---------------
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .phar .cgi .pl
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .phar
+
+# --- Když běží mod_php, vypneme ho tu úplně (jen uvnitř IfModule!) -----------
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+
+# --- Žádné výpisy obsahu složky ----------------------------------------------
+Options -Indexes -ExecCGI

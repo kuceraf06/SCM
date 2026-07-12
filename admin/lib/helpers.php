@@ -74,14 +74,14 @@ function flash_get(): array
 //  PŘESMĚROVÁNÍ
 // ============================================================
 
-function redirect(string $url): never
+function redirect(string $url): void
 {
     header('Location: ' . $url);
     exit;
 }
 
 /** Přesměrování na admin cestu relativně k baseUrl. */
-function redirect_admin(string $path = ''): never
+function redirect_admin(string $path = ''): void
 {
     global $baseUrl;
     redirect($baseUrl . 'admin/' . ltrim($path, '/'));

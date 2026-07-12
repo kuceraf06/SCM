@@ -15,6 +15,19 @@
  */
 
 return [
+
+    /*
+     * Hezké adresy (/players) místo náhradních (index.php?route=players).
+     *
+     * true  = potřebuje přepis adres na serveru:
+     *           • Apache – zařídí .htaccess v kořeni, nic dalšího netřeba
+     *           • nginx  – vlož přiložený nginx.conf.vzor
+     * false = funguje na JAKÉMKOLI serveru bez nastavení, adresy jsou ošklivější
+     *
+     * KDYŽ PO NASAZENÍ FUNGUJE JEN ÚVODNÍ STRÁNKA A OSTATNÍ HLÁSÍ 404,
+     * přepni tohle na false. Web začne fungovat okamžitě.
+     */
+    "pretty_urls" => true,
     // Přihlašovací jméno administrátora
     'admin_username' => 'zmen_me',
 

@@ -13,6 +13,17 @@
 # (sekce Změna hesla). Pokud bys config chtěl z gitu vyřadit, odkomentuj:
 # /config/config.php
 
+# --- Přihlášení k poštovnímu serveru (až se zprovozní e-maily) --------------
+# POZOR: config/secrets.php MÁ ZŮSTAT V GITU. Nepřidávej sem jeho vyloučení!
+#
+# Kolega web jen stáhne z gitu a nahraje na server. Kdyby secrets.php v gitu
+# nebylo, musel by ho po každém nasazení ručně dopisovat – a když by na to
+# zapomněl, e-maily by tiše nefungovaly. (Přesně tahle chyba se stala v SAFE.)
+#
+# Cena za to: heslo uvidí každý, kdo má přístup k repozitáři. Repozitář proto
+# drž SOUKROMÝ. Heslo aplikace jde kdykoliv zneplatnit v Google účtu
+# (Zabezpečení → Hesla aplikací) a vygenerovat nové.
+
 # --- Databaze (runtime data) -----------------------------------------------
 # Bezici SQLite databaze patri na server, ne do gitu. Verzovani menici se
 # databaze byl hlavni problem stare administrace (deploy prepsal data).
@@ -24,6 +35,9 @@
 # Fotky nahrane v administraci. Taky data, ne kod.
 /public/images/uploads/*
 !/public/images/uploads/.gitkeep
+# .htaccess tu MUSÍ zůstat – brání spuštění PHP ve složce s nahranými soubory.
+# Bez něj by šlo nahrát skript a spustit ho na serveru.
+!/public/images/uploads/.htaccess
 
 # --- Systemove smeti a logy -------------------------------------------------
 .DS_Store

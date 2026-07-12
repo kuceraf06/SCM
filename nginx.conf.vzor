@@ -1,0 +1,69 @@
+# =============================================================================
+#  Konfigurace pro NGINX
+# =============================================================================
+#  POTŘEBA JEN KDYŽ SERVER BĚŽÍ NA NGINXU.
+#  Na Apache není třeba nic – ten si vystačí se soubory .htaccess v projektu.
+#
+#  PROČ: nginx žádné .htaccess nezná. Bez téhle konfigurace by:
+#    • všechny stránky házely 404 (nefungoval by přepis adres),
+#    • šla si z internetu stáhnout celá databáze.
+#
+#  POZOR NA POŘADÍ: nginx zkouší regulární "location" bloky v tom pořadí, jak
+#  jsou zapsané, a použije PRVNÍ, který sedí. Zákazy proto MUSÍ být PŘED
+#  blokem, který spouští PHP – jinak by je předběhl a zákaz by se neuplatnil.
+#
+#  Synology: Web Station → Web Service Portal. Pokud je zvolený Nginx, vlož
+#  tyhle bloky. (Jednodušší je zvolit Apache – tam netřeba nic.)
+# =============================================================================
+
+server {
+    listen 80;
+    server_name safe.minerskladno.cz;      # <<< UPRAVIT
+
+    root /cesta/k/projektu;                # <<< UPRAVIT: kam je projekt nahraný
+    index index.php;
+
+    client_max_body_size 10M;              # kvůli nahrávání fotek v administraci
+
+    # =========================================================================
+    #  1) ZÁKAZY – musí být PRVNÍ, ještě před spouštěním PHP
+    # =========================================================================
+
+    # Nastavení, databáze, knihovny – ven se nesmí dostat nic z toho.
+    location ~ ^/(config|storage|app)/ {
+        deny all;
+        return 404;
+    }
+
+    location ~ ^/admin/lib/ {
+        deny all;
+        return 404;
+    }
+
+    # Ve složce nahraných souborů se NIKDY nesmí spustit skript (obrana proti RCE).
+    location ~ ^/public/images/uploads/.*\.(php|phtml|php[0-9]|phps|phar|cgi|pl|py|sh)$ {
+        deny all;
+        return 404;
+    }
+
+    # Skryté soubory (.git, .htaccess, .env…)
+    location ~ /\. {
+        deny all;
+        return 404;
+    }
+
+    # =========================================================================
+    #  2) SPOUŠTĚNÍ PHP
+    # =========================================================================
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;    # <<< UPRAVIT dle serveru
+    }
+
+    # =========================================================================
+    #  3) PŘEPIS ADRES – vše ostatní posíláme na index.php
+    # =========================================================================
+    location / {
+        try_files $uri $uri/ /index.php?route=$uri&$args;
+    }
+}

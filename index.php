@@ -41,22 +41,54 @@ if (array_key_exists($route, $routes)) {
 
 // =====================  POMOCNÉ FUNKCE PRO ODKAZY  =====================
 
+/**
+ * Hezké adresy (/players) zapnuté, nebo náhradní (?route=players)?
+ *
+ * Hezké adresy potřebují přepis adres na serveru. Na Apache to zařídí .htaccess
+ * v kořeni projektu. NGINX žádné .htaccess nezná - buď se vloží přiložený
+ * nginx.conf.vzor, NEBO se tohle přepne na false a web funguje i bez jakéhokoli
+ * nastavení serveru (jen adresy budou ošklivější).
+ *
+ * Když po nasazení funguje jen úvodní stránka a všechno ostatní hlásí 404,
+ * je to přesně tenhle případ: v config/config.php nastav 'pretty_urls' => false.
+ */
+function scm_pretty_urls(): bool
+{
+    static $zapnuto = null;
+    if ($zapnuto === null) {
+        $cfgFile = __DIR__ . '/config/config.php';
+        $cfg = is_file($cfgFile) ? require $cfgFile : [];
+        $zapnuto = (bool)($cfg['pretty_urls'] ?? true);
+    }
+    return $zapnuto;
+}
+
+/** Sestaví adresu podle toho, jestli server umí přepis adres. */
+function scm_build_url(string $cesta): string
+{
+    global $baseUrl;
+    if (scm_pretty_urls()) {
+        return $baseUrl . $cesta;
+    }
+    return $baseUrl . 'index.php?route=' . rawurlencode($cesta);
+}
+
 /** Odkaz na stránku v aktuálním jazyce (do navbaru, tlačítek atd.) */
 function url(string $slug = ''): string
 {
-    global $baseUrl, $lang;
+    global $lang;
     $prefix = ($lang === 'en') ? 'en/' : '';
-    return $baseUrl . $prefix . $slug;
+    return scm_build_url($prefix . $slug);
 }
 
 /** Odkaz na stejnou stránku v druhém jazyce (přepínač CZ/EN) */
 function switchUrl(): string
 {
-    global $baseUrl, $lang, $route;
+    global $lang, $route;
     if ($lang === 'en') {
-        return $baseUrl . $route;                      // en -> cs (bez prefixu)
+        return scm_build_url($route);
     }
-    return $baseUrl . 'en' . ($route !== '' ? '/' . $route : ''); // cs -> en
+    return scm_build_url('en' . ($route !== '' ? '/' . $route : ''));
 }
 
 /** Odkaz na statický soubor v public/ (css, js, obrázky) */
@@ -64,6 +96,14 @@ function asset(string $path): string
 {
     global $baseUrl;
     return $baseUrl . 'public/' . ltrim($path, '/');
+}
+
+// =====================  KONTROLA DATABÁZE  =====================
+// Bez databáze by se web vykreslil prázdný a nikdo by nepoznal proč.
+// Radši rovnou srozumitelná chyba s návodem (typicky chybí práva zápisu).
+require_once __DIR__ . '/app/lib/data.php';
+if (scm_public_db() === null) {
+    scm_db_error_page();
 }
 
 // =====================  VYKRESLENÍ  =====================
