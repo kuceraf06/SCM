@@ -37,8 +37,8 @@ $nav = [
     <div>Miners Kladno <span class="special">Baseball &amp; Softball</span></div>
     <div class="header-icons">
         <a href="https://softball.cz" target="_blank"><img src="<?= asset('images/common/softballczech.png') ?>" alt=""></a>
-        <a href="https://www.baseball.cz" target="_blank"><img src="<?= asset('images/common/baseballczech.png') ?>" alt=""></a>
-        <a href="https://www.flickr.com/photos/201375961@N07/albums" target="_blank"><img src="<?= asset('images/common/flickr.png') ?>" alt=""></a>
+        <a href="https://www.baseball.cz" target="_blank"><img src="<?= asset('images/common/baseballczechia.png') ?>" alt=""></a>
+        <a href="https://www.flickr.com/photos/201375961@N07/albums" target="_blank"><img src="<?= asset('images/common/zonerama.png') ?>" alt=""></a>
         <a href="https://www.facebook.com/minerskladno" target="_blank"><img src="<?= asset('images/common/FB.png') ?>" alt=""></a>
         <a href="https://www.instagram.com/minerskladno/" target="_blank"><img src="<?= asset('images/common/IG.png') ?>" alt=""></a>
     </div>
